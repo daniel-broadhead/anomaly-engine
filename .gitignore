@@ -1,0 +1,22 @@
+# Environments
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Data (large, keep out of git; add your own .gitkeep files as needed)
+data/healthcare/*.csv
+data/financial/*.csv
+data/realestate/*.csv
+
+# Models (track via Git LFS instead if committing)
+models/*.joblib
+models/*.pt
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
