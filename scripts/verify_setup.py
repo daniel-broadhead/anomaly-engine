@@ -4,12 +4,18 @@ Phase 1/2 verification script.
 Confirms all three datasets load correctly and pass through preprocess()
 without errors. Run this from the project root:
 
-    python verify_setup.py
+    python scripts/verify_setup.py
 
 If your downloaded filenames differ from the defaults below (Kaggle zips
 sometimes rename things), edit the FILES dict to match what's actually in
 your data/ folders.
 """
+
+import sys
+from pathlib import Path
+
+# Allow running via `python scripts/verify_setup.py` from the project root
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 import pandas as pd
 from src.config import CONFIGS

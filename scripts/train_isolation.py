@@ -3,7 +3,7 @@ Phase 3: Train and validate Isolation Forest across all three domains.
 
 Run from the project root:
 
-    python train_isolation.py
+    python scripts/train_isolation.py
 
 For each domain this will:
   1. Load the CSV and run it through preprocess()
@@ -16,6 +16,12 @@ For the financial domain specifically, it also checks flagged anomalies
 against the ground-truth 'Class' column and reports precision (target: >30%,
 per the guide).
 """
+
+import sys
+from pathlib import Path
+
+# Allow running via `python scripts/train_isolation.py` from the project root
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 import numpy as np
 import pandas as pd
