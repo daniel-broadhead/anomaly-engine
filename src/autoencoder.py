@@ -41,7 +41,16 @@ class Autoencoder(nn.Module):
         return ((x - recon) ** 2).mean(dim=1).numpy()
 
 
-def train_autoencoder(X, epochs=50, batch_size=256, lr=1e-3):
+def train_autoencoder(X, epochs=50, batch_size=256, lr=1e-3, random_state=42):
+    """
+    random_state seeds both the model's weight initialization and the
+    DataLoader's shuffle order (both draw from torch's global RNG), so
+    training on the same X with the same random_state always produces
+    the same model. Without this, results vary run-to-run even on
+    identical data.
+    """
+    torch.manual_seed(random_state)
+
     X_tensor = torch.FloatTensor(X)
     loader = DataLoader(TensorDataset(X_tensor), batch_size=batch_size, shuffle=True)
 

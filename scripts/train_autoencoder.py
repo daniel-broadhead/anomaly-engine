@@ -46,11 +46,20 @@ MODELS_DIR = 'models'
 EPOCHS = 50
 BATCH_SIZE = 256
 LR = 1e-3
+RANDOM_STATE = 42  # matches IsolationDetector's random_state for consistency
 
 
-def train_with_history(X, epochs=EPOCHS, batch_size=BATCH_SIZE, lr=LR):
+def train_with_history(X, epochs=EPOCHS, batch_size=BATCH_SIZE, lr=LR, random_state=RANDOM_STATE):
     """Same architecture/training as src/autoencoder.py, but also returns
-    the per-epoch loss history so we can confirm convergence."""
+    the per-epoch loss history so we can confirm convergence.
+
+    random_state seeds both weight initialization and DataLoader shuffling
+    (both draw from torch's global RNG) -- without it, results vary
+    run-to-run even on identical data, which is what caused the financial
+    domain's flagged rows to shift between runs despite unchanged
+    preprocessing."""
+    torch.manual_seed(random_state)
+
     X_tensor = torch.FloatTensor(X)
     loader = DataLoader(TensorDataset(X_tensor), batch_size=batch_size, shuffle=True)
 

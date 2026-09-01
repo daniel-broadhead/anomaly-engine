@@ -41,6 +41,18 @@ if uploaded:
     df = pd.read_csv(uploaded)
     cfg = CONFIGS[domain]
 
+    missing_numeric = [c for c in cfg['numeric'] if c not in df.columns]
+    missing_categorical = [c for c in cfg.get('categorical', []) if c not in df.columns]
+    if missing_numeric or missing_categorical:
+        st.error(
+            f"This CSV doesn't match the **{domain}** domain's expected columns.\n\n"
+            f"- Missing numeric columns: {missing_numeric or 'none'}\n"
+            f"- Missing categorical columns: {missing_categorical or 'none'}\n\n"
+            f"Double-check you've selected the right domain in the sidebar, or see `src/config.py` "
+            f"for the expected schema."
+        )
+        st.stop()
+
     with st.spinner('Preprocessing...'):
         X, scaler, cols = preprocess(df, cfg['numeric'], cfg.get('categorical', []))
 
