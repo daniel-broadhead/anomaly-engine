@@ -5,7 +5,8 @@ Upload a CSV, pick a domain and method, and get back a ranked list of
 outlier rows with a score-distribution chart.
 
 Run with: streamlit run app/streamlit_app.py
-(from the project root, with models already trained -- see Phase 3/4)
+(from the project root -- trained models are included in this repo,
+so no setup beyond `pip install -r requirements.txt` is needed)
 """
 
 import sys
@@ -59,7 +60,7 @@ if uploaded:
     if method == 'Isolation Forest':
         model_path = MODELS_DIR / f'{domain}_isolation.joblib'
         if not model_path.exists():
-            st.error(f'No trained model found at {model_path}. Run Phase 3 training first.')
+            st.error(f'No trained model found at {model_path}. Try re-cloning the repo -- trained models should be included.')
             st.stop()
         detector = IsolationDetector().load(str(model_path))
         scores = detector.score(X)
@@ -67,7 +68,7 @@ if uploaded:
     else:
         model_path = MODELS_DIR / f'{domain}_autoencoder.pt'
         if not model_path.exists():
-            st.error(f'No trained model found at {model_path}. Run Phase 4 training first.')
+            st.error(f'No trained model found at {model_path}. Try re-cloning the repo -- trained models should be included.')
             st.stop()
         model = Autoencoder(input_dim=X.shape[1])
         model.load_state_dict(torch.load(str(model_path)))

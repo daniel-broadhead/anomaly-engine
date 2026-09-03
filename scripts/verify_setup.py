@@ -1,5 +1,4 @@
 """
-Phase 1/2 verification script.
 
 Confirms all three datasets load correctly and pass through preprocess()
 without errors. Run this from the project root:

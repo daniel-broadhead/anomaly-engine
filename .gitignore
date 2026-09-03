@@ -9,10 +9,6 @@ data/healthcare/*.csv
 data/financial/*.csv
 data/realestate/*.csv
 
-
-# Notebooks checkpoints
-.ipynb_checkpoints/
-
 # OS/editor
 .DS_Store
 .vscode/

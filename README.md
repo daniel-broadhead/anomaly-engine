@@ -3,8 +3,6 @@
 A configurable anomaly detection pipeline demonstrating Isolation Forest and
 Autoencoder methods across healthcare, financial, and real estate domains.
 
-<!-- Demo GIF goes here once Phase 6 is complete -->
-
 ## Architecture
 
 ```
@@ -59,26 +57,35 @@ Autoencoder training initially had no fixed random seed, so PyTorch's default we
 
 ## Limitations and next steps
 
+- Stability checks (retraining with *different* random seeds and confirming the flagged rows stay roughly consistent) haven't been run for any domain yet. This is distinct from the reproducibility fix above, which only guarantees the *same* seed reproduces the *same* result — it says nothing about how sensitive the flagged anomalies are to the seed choice itself. Worth adding, especially for healthcare and real estate, since they have no ground-truth labels to validate against any other way.
 - The financial dataset's duplicate transaction rows haven't been deduplicated before training; worth checking whether this affects flagged results.
-- The stability-check approach (verifying consistent flags across random seeds) was only run for financial; extending it to healthcare and real estate would strengthen validation where no ground-truth labels exist.
 - A Variational Autoencoder (VAE) would give proper probability estimates on anomaly scores instead of raw reconstruction error — a natural next step if pursuing this further.
-- Production deployment would need a retraining/drift-detection pipeline, authenticated API access, and a human-in-the-loop review queue rather than automated action on flagged anomalies.
+- Production deployment would need a retraining/drift-detection pipeline, an authenticated API, and a human-in-the-loop review queue rather than automated action on flagged anomalies.
 
 ## Running locally
 
+Trained models are included in this repo (~7MB total), so the app runs immediately after cloning — no dataset download or training step required:
+
 ```bash
+git clone <this-repo-url>
+cd anomaly-engine
 python -m venv venv
 source venv/bin/activate    # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-
-# 1. Download the three datasets into data/<domain>/ (see project guide)
-# 2. Train models for each domain (Phase 3 & 4)
-# 3. Launch the app
 streamlit run app/streamlit_app.py
 ```
+
+Upload any CSV matching one of the three domain schemas (see `src/config.py`) to try it out.
+
+**To retrain the models yourself** (optional — only needed if you want to reproduce or modify the pipeline):
+
+1. Download the three datasets from Kaggle: "diabetes 130 hospitals" (healthcare), "credit card fraud detection" (financial), "house prices ames iowa" (real estate). Place each CSV in its matching `data/<domain>/` folder.
+2. Run the training scripts:
+   ```bash
+   python scripts/train_isolation.py
+   python scripts/train_autoencoder.py
+   ```
 
 ## Tech stack
 
 scikit-learn, PyTorch, SHAP, pandas/NumPy, Streamlit, Docker.
-
-Trained models are included in the repo (~7MB total) — no separate download or training step needed to run the app."

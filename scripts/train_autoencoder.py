@@ -1,5 +1,4 @@
 """
-Phase 4: Train and validate the PyTorch Autoencoder across all three domains.
 
 Run from the project root:
 

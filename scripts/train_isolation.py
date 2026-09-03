@@ -1,5 +1,4 @@
 """
-Phase 3: Train and validate Isolation Forest across all three domains.
 
 Run from the project root:
 

@@ -11,7 +11,7 @@ Run from the project root:
     python scripts/compare_methods.py
 
 Requires models/<domain>_isolation.joblib and models/<domain>_autoencoder.pt
-to already exist (Phase 3 and Phase 4 must both be complete).
+to already exist.
 """
 
 import sys

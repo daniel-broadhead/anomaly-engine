@@ -1,5 +1,4 @@
 """
-Phase 5: Explain the top anomalies flagged by each method, per domain.
 
 For Isolation Forest, uses SHAP's TreeExplainer -- computed only on the
 handful of rows being explained (not the full dataset) since SHAP over
@@ -14,7 +13,7 @@ Run from the project root:
     python scripts/explain_anomalies.py
 
 Requires models/<domain>_isolation.joblib and models/<domain>_autoencoder.pt
-to already exist (Phase 3 and Phase 4 must both be complete).
+to already exist.
 """
 
 import sys
